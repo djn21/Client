@@ -9,19 +9,21 @@ import java.nio.file.StandardCopyOption;
 public class ReadBytes extends Thread {
 
 	private static final int bufferSize = 65;
-	private static final String filesPath = "sending";
-	private static final String sentFilesPath = "sent";
 
 	private String serverURL;
+	private String sendingPath;
+	private String sentPath;
 
-	public ReadBytes(String serverURL) {
+	public ReadBytes(String serverURL, String sendingPath, String sentPath) {
 		this.serverURL = serverURL;
+		this.sendingPath=sendingPath;
+		this.sentPath=sentPath;
 	}
 
 	public void run() {
 		while (!App.end) {
 			// Read file if exists
-			File folder = new File(filesPath);
+			File folder = new File(sendingPath);
 			File[] files = folder.listFiles();
 			if (files.length != 0) {
 				for (File file : files) {
@@ -33,10 +35,11 @@ public class ReadBytes extends Thread {
 							System.arraycopy(buffer, 0, bytes, 0, bytes.length);
 							new SendBytesHTTP(serverURL, bytes).start();
 						}
+						System.out.println("File sent HTTP");
 						fin.close();
 						// Copy file to sent folder
 						fin = new FileInputStream(file);
-						Files.copy(fin, new File((sentFilesPath + File.separator + file.getName())).toPath(),
+						Files.copy(fin, new File((sentPath + File.separator + file.getName())).toPath(),
 								StandardCopyOption.REPLACE_EXISTING);
 						fin.close();
 						file.delete();

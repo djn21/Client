@@ -9,6 +9,8 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.HashMap;
+import java.util.Map;
 
 import com.rtrk.client.socket.ServerSocket;
 
@@ -21,32 +23,47 @@ public class App {
 	public static boolean end = false;
 
 	public static void main(String[] args) {
-		// Start server socket
-		new ServerSocket().start();
-		// Get and test connection
-		String serverURL = connectToServer();
-		// Send bytes
-		if (serverURL != null) {
-			new ReadBytes(serverURL).start();
-			System.out.println("Connected to server.");
+		// Get config
+		Map<String, String> config = getConfig();
+		String servletAddress=config.get("servletaddress");
+		int socketPort=Integer.parseInt(config.get("socketport"));
+		String socketFilePath=config.get("filepathsocket");
+		String sendingFilePath=config.get("filepathsending");
+		String sentFilePath=config.get("filepathsent");
+		//Start socket server
+		new ServerSocket(socketPort, socketFilePath).start();
+		// Test connection
+		boolean connected = connectToServer(servletAddress);
+		if (connected) {
+			// Send bytes
+			new ReadBytes(servletAddress, sendingFilePath, sentFilePath).start();
+			System.out.println("Connected to HTTP Server.");
 		} else {
-			System.out.println("Can't connect to server.");
+			System.out.println("Can't connect HTTP to Server.");
 		}
 	}
 
-	private static String connectToServer() {
+	private static Map<String, String> getConfig() {
 		// Read URL from config file
-		String serverURL = "";
+		Map<String, String> config=new HashMap<String, String>();
 		try {
 			BufferedReader in = new BufferedReader(
-					new InputStreamReader(new FileInputStream(new File("config\\ServerURL.txt"))));
-			serverURL = in.readLine();
+					new InputStreamReader(new FileInputStream(new File("config\\config.txt"))));
+			String row="";
+			while((row=in.readLine())!=null){
+				config.put(row.split("#")[0], row.split("#")[1]);
+			}
 			in.close();
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		return config;
+	}
+
+	private static boolean connectToServer(String serverURL) {
+
 		// Connecting to srever
 		try {
 			URL url = new URL(serverURL);
@@ -55,14 +72,16 @@ public class App {
 			int responseCode = connection.getResponseCode();
 			if (responseCode == 200) {
 				connection.disconnect();
-				return serverURL;
+				return true;
 			}
 		} catch (MalformedURLException e) {
 			e.printStackTrace();
+			return false;
 		} catch (IOException e) {
 			e.printStackTrace();
+			return false;
 		}
-		return null;
+		return false;
 	}
 
 }

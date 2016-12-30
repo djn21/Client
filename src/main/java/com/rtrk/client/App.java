@@ -43,7 +43,7 @@ public class App {
 		}
 	}
 
-	private static Map<String, String> getConfig() {
+	public static Map<String, String> getConfig() {
 		// Read URL from config file
 		Map<String, String> config=new HashMap<String, String>();
 		try {
@@ -56,14 +56,15 @@ public class App {
 			in.close();
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
+			return null;
 		} catch (IOException e) {
 			e.printStackTrace();
+			return null;
 		}
 		return config;
 	}
 
-	private static boolean connectToServer(String serverURL) {
-
+	public static boolean connectToServer(String serverURL) {
 		// Connecting to srever
 		try {
 			URL url = new URL(serverURL);

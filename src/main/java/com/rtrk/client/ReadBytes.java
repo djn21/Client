@@ -6,6 +6,14 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
 
+/**
+ * 
+ * @author djekanovic
+ *	
+ * Reading bytes from files in folder
+ * and sending to server
+ */
+
 public class ReadBytes extends Thread {
 
 	private static final int bufferSize = 65;
@@ -48,7 +56,7 @@ public class ReadBytes extends Thread {
 					}
 				}
 			}
-			// Sleep 0.5 second
+			// Sleep 0.5 seconds
 			try {
 				sleep(500);
 			} catch (InterruptedException e) {

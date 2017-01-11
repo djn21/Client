@@ -38,34 +38,33 @@ public class AppTest extends TestCase {
 	 * Test connectToServer
 	 */
 	public void testConnectToServer() {
+		//Normal connection
 		String serverURL = "http://localhost:8080/server/server";
 		boolean actual = App.connectToServer(serverURL);
 		assertEquals(true, actual);
+		//Bad URL
+		serverURL="";
+		actual=App.connectToServer(serverURL);
+		assertEquals(false, actual);
+		//Different response code
+		serverURL="http://localhost:8080/server/responsecode";
+		actual=App.connectToServer(serverURL);
+		assertEquals(false, actual);
 	}
 
 	/**
 	 * Test getConfig
 	 */
 	public void testGetConfig() {
-		Map<String, String> config = App.getConfig();
+		String filePath="config\\config.txt";
+		Map<String, String> config = App.getConfig(filePath);
 		assertNotNull(config);
-	}
-
-	/**
-	 * Test ReadBytes
-	 */
-	public void testReadBytes() {
-		ReadBytes read = new ReadBytes("http://localhost:8080/server/server",
-				"C:\\Users\\djekanovic\\Desktop\\sendinghttp", "C:\\Users\\djekanovic\\Desktop\\senthttp");
-		read.start();
-	}
-
-	/**
-	 * Test SendBytesHTTP
-	 */
-	public void testSendBytesHTTP() {
-		SendBytesHTTP sendingThread = new SendBytesHTTP("http://localhost:8080/server/server", "someBytes".getBytes());
-		sendingThread.start();
+		filePath="config\\emptyconfig.txt";
+		config=App.getConfig(filePath);
+		assertNull(config);
+		filePath="fileNotFound";
+		config=App.getConfig(filePath);
+		assertNull(config);
 	}
 
 }

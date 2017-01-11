@@ -7,6 +7,14 @@ import java.net.MalformedURLException;
 import java.net.ProtocolException;
 import java.net.URL;
 
+/**
+ * 
+ * @author djekanovic
+ *
+ *Connection to servlet and
+ *send bytes in POST method
+ */
+
 public class SendBytesHTTP extends Thread {
 
 	private String serverURL;

@@ -12,7 +12,7 @@ import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 
-import com.rtrk.client.socket.ServerSocket;
+//import com.rtrk.client.socket.ServerSocket;
 
 /**
  * Hello world!
@@ -24,14 +24,14 @@ public class App {
 
 	public static void main(String[] args) {
 		// Get config
-		Map<String, String> config = getConfig();
+		Map<String, String> config = getConfig("config\\config.txt");
 		String servletAddress=config.get("servletaddress");
-		int socketPort=Integer.parseInt(config.get("socketport"));
-		String socketFilePath=config.get("filepathsocket");
+		/*int socketPort=Integer.parseInt(config.get("socketport"));
+		String socketFilePath=config.get("filepathsocket");*/
 		String sendingFilePath=config.get("filepathsending");
 		String sentFilePath=config.get("filepathsent");
 		//Start socket server
-		new ServerSocket(socketPort, socketFilePath).start();
+		/*new ServerSocket(socketPort, socketFilePath).start();*/
 		// Test connection
 		boolean connected = connectToServer(servletAddress);
 		if (connected) {
@@ -42,28 +42,48 @@ public class App {
 			System.out.println("Can't connect HTTP to Server.");
 		}
 	}
-
-	public static Map<String, String> getConfig() {
+	
+	
+	/**
+	 * Read config (Servlet address, Sending file path, Sent file path)
+	 * from conig file <config/config.txt>
+	 * 
+	 * @return Map<String, String> if config file exists
+	 * or null if config file doesn't exist
+	 * or empty
+	 */
+	public static Map<String, String> getConfig(String filePath) {
 		// Read URL from config file
 		Map<String, String> config=new HashMap<String, String>();
 		try {
 			BufferedReader in = new BufferedReader(
-					new InputStreamReader(new FileInputStream(new File("config\\config.txt"))));
+					new InputStreamReader(new FileInputStream(new File(filePath))));
 			String row="";
 			while((row=in.readLine())!=null){
 				config.put(row.split("#")[0], row.split("#")[1]);
 			}
 			in.close();
 		} catch (FileNotFoundException e) {
-			e.printStackTrace();
 			return null;
 		} catch (IOException e) {
 			e.printStackTrace();
 			return null;
 		}
+		if(config.size()==0){
+			return null;
+		}
 		return config;
 	}
-
+	
+	/**
+	 * Testing connection to server
+	 * 
+	 * @param serverURL URL of server
+	 * @return true if connection established
+	 * and response code is 200 OK 
+	 * or false if can't connect to server
+	 * or bad response code
+	 */
 	public static boolean connectToServer(String serverURL) {
 		// Connecting to srever
 		try {
@@ -76,7 +96,6 @@ public class App {
 				return true;
 			}
 		} catch (MalformedURLException e) {
-			e.printStackTrace();
 			return false;
 		} catch (IOException e) {
 			e.printStackTrace();

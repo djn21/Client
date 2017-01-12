@@ -1,40 +1,59 @@
 package com.rtrk.client;
 
+import java.io.File;
+
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
 public class ReadBytesTest extends TestCase {
-	
+
 	/**
 	 * Create the test case
 	 *
-	 * @param testName name of the test case
+	 * @param testName
+	 *            name of the test case
 	 */
 	public ReadBytesTest(String testName) {
 		super(testName);
 	}
-	
+
 	/**
 	 * @return the suite of tests being tested
 	 */
 	public static Test suite() {
-		return new TestSuite(AppTest.class);
+		return new TestSuite(ReadBytesTest.class);
 	}
-	
+
 	/**
 	 * Rigourous Test :-)
 	 */
 	public void testReadBytes() {
 		assertTrue(true);
 	}
-	
+
 	/**
-	 * Test run method
+	 * Test sendFile method
 	 */
-    public void testRun() {
-        ReadBytes thread = new ReadBytes("http://localhost:8080/server/server", "C:\\Users\\djekanovic\\Desktop\\sendinghttp", "C:\\Users\\djekanovic\\Desktop\\senthttp");
-        thread.run();
-    }
+	public void testSendFile() {
+		File file = new File("C:\\Users\\djekanovic\\Desktop\\randombytes");
+		new ReadBytes().sendFile(file);
+		assertFalse(file.exists());
+		file = new File("noFile");
+		new ReadBytes().sendFile(file);
+		assertFalse(file.exists());
+	}
+
+	/**
+	 * Test replaceFile method
+	 */
+	public void testReplaceFile() {
+		File file = new File("C:\\Users\\djekanovic\\Desktop\\sendinghttp\\randombytes");
+		new ReadBytes().replaceFile(file);
+		File filesending = new File("C:\\Users\\djekanovic\\Desktop\\sendinghttp\\randombytes");
+		assertFalse(filesending.exists());
+		File filesent = new File("C:\\Users\\djekanovic\\Desktop\\senthttp\\randombytes");
+		assertTrue(filesent.exists());
+	}
 
 }

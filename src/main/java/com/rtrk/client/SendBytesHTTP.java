@@ -19,7 +19,7 @@ public class SendBytesHTTP extends Thread {
 
 	private String serverURL;
 	private byte[] bytes;
-
+	
 	public SendBytesHTTP(String serverURL, byte[] bytes) {
 		this.serverURL = serverURL;
 		this.bytes = bytes;

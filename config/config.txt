@@ -1,4 +1,4 @@
-servletaddress#http://localhost:8080/server/server
+servletaddress#http://localhost:8080/server/servera
 socketport#9090
 filepathsocket#C:\\Users\\djekanovic\\Desktop\\socketreq
 filepathsending#C:\\Users\\djekanovic\\Desktop\\sendinghttp

@@ -38,17 +38,17 @@ public class AppTest extends TestCase {
 	 * Test connectToServer
 	 */
 	public void testConnectToServer() {
-		//Normal connection
+		// Normal connection
 		String serverURL = "http://localhost:8080/server/server";
 		boolean actual = App.connectToServer(serverURL);
 		assertEquals(true, actual);
-		//Bad URL
-		serverURL="";
-		actual=App.connectToServer(serverURL);
+		// Bad URL
+		serverURL = "";
+		actual = App.connectToServer(serverURL);
 		assertEquals(false, actual);
-		//Different response code
-		serverURL="http://localhost:8080/server/responsecode";
-		actual=App.connectToServer(serverURL);
+		// Different response code
+		serverURL = "http://localhost:8080/server/responsecode";
+		actual = App.connectToServer(serverURL);
 		assertEquals(false, actual);
 	}
 
@@ -56,14 +56,14 @@ public class AppTest extends TestCase {
 	 * Test getConfig
 	 */
 	public void testGetConfig() {
-		String filePath="config\\config.txt";
+		String filePath = "config\\config.txt";
 		Map<String, String> config = App.getConfig(filePath);
 		assertNotNull(config);
-		filePath="config\\emptyconfig.txt";
-		config=App.getConfig(filePath);
+		filePath = "config\\emptyconfig.txt";
+		config = App.getConfig(filePath);
 		assertNull(config);
-		filePath="fileNotFound";
-		config=App.getConfig(filePath);
+		filePath = "fileNotFound";
+		config = App.getConfig(filePath);
 		assertNull(config);
 	}
 

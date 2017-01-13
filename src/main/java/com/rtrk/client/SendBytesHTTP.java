@@ -11,15 +11,14 @@ import java.net.URL;
  * 
  * @author djekanovic
  *
- *Connection to servlet and
- *send bytes in POST method
+ *         Connecting to servlet and send bytes in POST method
  */
 
 public class SendBytesHTTP extends Thread {
 
 	private String serverURL;
 	private byte[] bytes;
-	
+
 	public SendBytesHTTP(String serverURL, byte[] bytes) {
 		this.serverURL = serverURL;
 		this.bytes = bytes;
@@ -47,7 +46,7 @@ public class SendBytesHTTP extends Thread {
 			e.printStackTrace();
 		} catch (MalformedURLException e) {
 			e.printStackTrace();
-		} catch(IOException e){
+		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}

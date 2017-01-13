@@ -4,13 +4,14 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
 
 /**
  * 
  * @author djekanovic
  * 
- *         Reading bytes from files in folder and sending to server
+ *         Read bytes from file
  */
 
 public class ReadBytes extends Thread {
@@ -53,9 +54,10 @@ public class ReadBytes extends Thread {
 	}
 
 	/**
-	 * Read file and send bytes to servlet
+	 * Send file to servlet
 	 * 
 	 * @param file
+	 *            - sending file
 	 */
 	public void sendFile(File file) {
 		try {
@@ -69,7 +71,7 @@ public class ReadBytes extends Thread {
 			System.out.println("File sent HTTP");
 			fin.close();
 			// Copy file to sent folder
-			replaceFile(file);
+			replaceFile(file, new File((sentPath + File.separator + file.getName())).toPath());
 		} catch (IOException e) {
 		}
 	}
@@ -78,16 +80,17 @@ public class ReadBytes extends Thread {
 	 * Replace file from sending to sent folder
 	 * 
 	 * @param file
+	 *            - sending file
+	 * @param path
+	 *            - path of sent folder
 	 */
-	public void replaceFile(File file) {
+	public void replaceFile(File file, Path path) {
 		try {
 			FileInputStream fin = new FileInputStream(file);
-			Files.copy(fin, new File((sentPath + File.separator + file.getName())).toPath(),
-					StandardCopyOption.REPLACE_EXISTING);
+			Files.copy(fin, path, StandardCopyOption.REPLACE_EXISTING);
 			fin.close();
 			file.delete();
 		} catch (Exception e) {
-			e.printStackTrace();
 		}
 	}
 

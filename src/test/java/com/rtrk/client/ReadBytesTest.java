@@ -49,7 +49,8 @@ public class ReadBytesTest extends TestCase {
 	 */
 	public void testReplaceFile() {
 		File file = new File("C:\\Users\\djekanovic\\Desktop\\sendinghttp\\randombytes");
-		new ReadBytes().replaceFile(file);
+		assertTrue(file.exists());
+		new ReadBytes().replaceFile(file, new File("C:\\Users\\djekanovic\\Desktop\\senthttp\\randombytes").toPath());
 		File filesending = new File("C:\\Users\\djekanovic\\Desktop\\sendinghttp\\randombytes");
 		assertFalse(filesending.exists());
 		File filesent = new File("C:\\Users\\djekanovic\\Desktop\\senthttp\\randombytes");

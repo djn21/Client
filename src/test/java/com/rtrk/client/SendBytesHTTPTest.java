@@ -4,36 +4,30 @@ import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
-public class SendBytesHTTPTest extends TestCase{
+public class SendBytesHTTPTest extends TestCase {
 
 	/**
 	 * Create the test case
 	 *
-	 * @param testName name of the test case
+	 * @param testName
+	 *            name of the test case
 	 */
 	public SendBytesHTTPTest(String testName) {
 		super(testName);
 	}
-	
+
 	/**
 	 * @return the suite of tests being tested
 	 */
 	public static Test suite() {
 		return new TestSuite(SendBytesHTTPTest.class);
 	}
-	
+
 	/**
 	 * Rigourous Test :-)
 	 */
 	public void testSendBytesHTTP() {
 		assertTrue(true);
 	}
-	
-	/**
-	 * Test run method
-	 */
-    public void testRun() {
-        
-    }
-	
+
 }

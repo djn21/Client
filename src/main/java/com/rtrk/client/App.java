@@ -24,7 +24,7 @@ public class App {
 
 	public static void main(String[] args) {
 		// Get config
-		Map<String, String> config = getConfig("config\\config.txt");
+		Map<String, String> config = getConfig("config\\config.cfg");
 		String servletAddress = config.get("servletaddress");
 		String sendingFilePath = config.get("filepathsending");
 		String sentFilePath = config.get("filepathsent");
@@ -35,7 +35,7 @@ public class App {
 			new ReadBytes(servletAddress, sendingFilePath, sentFilePath).start();
 			System.out.println("Connected to HTTP Server.");
 		} else {
-			System.out.println("Can't connect HTTP to Server.");
+			System.out.println("Can't connect to HTTP Server.");
 		}
 	}
 
@@ -53,7 +53,7 @@ public class App {
 			BufferedReader in = new BufferedReader(new InputStreamReader(new FileInputStream(new File(filePath))));
 			String row = "";
 			while ((row = in.readLine()) != null) {
-				config.put(row.split("#")[0], row.split("#")[1]);
+				config.put(row.split("\\|")[0], row.split("\\|")[1]);
 			}
 			in.close();
 		} catch (FileNotFoundException e) {

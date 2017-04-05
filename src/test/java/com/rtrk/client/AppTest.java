@@ -56,10 +56,10 @@ public class AppTest extends TestCase {
 	 * Test getConfig
 	 */
 	public void testGetConfig() {
-		String filePath = "config\\config.txt";
+		String filePath = "config\\config.cfg";
 		Map<String, String> config = App.getConfig(filePath);
 		assertNotNull(config);
-		filePath = "config\\emptyconfig.txt";
+		filePath = "config\\emptyconfig.cfg";
 		config = App.getConfig(filePath);
 		assertNull(config);
 		filePath = "fileNotFound";

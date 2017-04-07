@@ -1,0 +1,3 @@
+com\rtrk\client\AppTest.class
+com\rtrk\client\ReadBytesTest.class
+com\rtrk\client\SendBytesHTTPTest.class

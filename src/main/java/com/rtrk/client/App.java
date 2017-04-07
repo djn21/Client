@@ -23,28 +23,33 @@ public class App {
 	public static boolean end = false;
 
 	public static void main(String[] args) {
+
 		// Get config
 		Map<String, String> config = getConfig("config\\config.cfg");
 		String servletAddress = config.get("servletaddress");
 		String sendingFilePath = config.get("filepathsending");
 		String sentFilePath = config.get("filepathsent");
-		// Test connection
+
+		// Connect to server
 		boolean connected = connectToServer(servletAddress);
+		
 		if (connected) {
-			// Send bytes
 			new ReadBytes(servletAddress, sendingFilePath, sentFilePath).start();
 			System.out.println("Connected to HTTP Server.");
 		} else {
 			System.out.println("Can't connect to HTTP Server.");
 		}
+		
 	}
 
 	/**
+	 * 
 	 * Read config (Servlet address, Sending file path, Sent file path) from
 	 * conig file <config/config.txt>
 	 * 
 	 * @return Map<String, String> if config file exists or null if config file
 	 *         doesn't exist or empty
+	 *         
 	 */
 	public static Map<String, String> getConfig(String filePath) {
 		// Read URL from config file
@@ -68,12 +73,14 @@ public class App {
 	}
 
 	/**
-	 * Testing connection to server
+	 * 
+	 * Connecting to server
 	 * 
 	 * @param serverURL
 	 *            URL of server
 	 * @return true if connection established and response code is 200 OK or
 	 *         false if can't connect to server or bad response code
+	 *         
 	 */
 	public static boolean connectToServer(String serverURL) {
 		// Connecting to srever

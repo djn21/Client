@@ -24,14 +24,7 @@ public class ReadBytesTest extends TestCase {
 	public static Test suite() {
 		return new TestSuite(ReadBytesTest.class);
 	}
-
-	/**
-	 * Rigourous Test :-)
-	 */
-	public void testReadBytes() {
-		assertTrue(true);
-	}
-
+	
 	/**
 	 * Test sendFile method
 	 */

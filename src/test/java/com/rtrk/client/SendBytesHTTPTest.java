@@ -23,11 +23,4 @@ public class SendBytesHTTPTest extends TestCase {
 		return new TestSuite(SendBytesHTTPTest.class);
 	}
 
-	/**
-	 * Rigourous Test :-)
-	 */
-	public void testSendBytesHTTP() {
-		assertTrue(true);
-	}
-
 }

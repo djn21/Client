@@ -39,10 +39,6 @@ public class AppTest extends TestCase {
 		serverURL = "";
 		actual = App.connectToServer(serverURL);
 		assertEquals(false, actual);
-		// Different response code
-		serverURL = "http://localhost:8080/server/responsecode";
-		actual = App.connectToServer(serverURL);
-		assertEquals(false, actual);
 	}
 
 	/**
@@ -52,12 +48,11 @@ public class AppTest extends TestCase {
 		String filePath = "config\\config.cfg";
 		Map<String, String> config = App.getConfig(filePath);
 		assertNotNull(config);
-		filePath = "config\\emptyconfig.cfg";
-		config = App.getConfig(filePath);
-		assertNull(config);
-		filePath = "fileNotFound";
-		config = App.getConfig(filePath);
-		assertNull(config);
+		assertTrue(config.containsKey("serveraddress"));
+		assertTrue(config.containsKey("socketport"));
+		assertTrue(config.containsKey("filepathsocket"));
+		assertTrue(config.containsKey("filepathsending"));
+		assertTrue(config.containsKey("filepathsent"));
 	}
 
 }

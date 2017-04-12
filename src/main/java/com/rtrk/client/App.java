@@ -22,11 +22,12 @@ public class App {
 
 	public static boolean end = false;
 
+	public static Map<String, String> config = getConfig("config\\config.cfg");
+	
 	public static void main(String[] args) {
 
 		// Get config
-		Map<String, String> config = getConfig("config\\config.cfg");
-		String servletAddress = config.get("servletaddress");
+		String servletAddress = config.get("serveraddress");
 		String sendingFilePath = config.get("filepathsending");
 		String sentFilePath = config.get("filepathsent");
 

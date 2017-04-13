@@ -36,8 +36,6 @@ public class SendBytesHTTPTest extends TestCase {
 		long sizeafter=fileafter.length();
 		
 		assertEquals(sizebefore, sizeafter-"TEST SEND BYTES\n".length());
-		
-		send.send();
 	}
 
 }

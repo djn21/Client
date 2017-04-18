@@ -1,6 +1,8 @@
 package com.rtrk.client;
 
 import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 
 import junit.framework.Test;
 import junit.framework.TestCase;
@@ -29,11 +31,17 @@ public class ReadBytesTest extends TestCase {
 	 * Test sendFile method
 	 */
 	public void testSendFile() {
-		File file = new File("C:\\Users\\djekanovic\\Desktop\\randombytes");
-		new ReadBytes().sendFile(file);
-		assertFalse(file.exists());
-		file = new File("noFile");
-		new ReadBytes().sendFile(file);
+		File file = new File("C:\\Users\\djekanovic\\Desktop\\sendinghttp\\randombytes");
+		FileOutputStream fos;
+		try {
+			file.createNewFile();
+			fos = new FileOutputStream(file);
+			fos.write("TEST SEND FILE\n".getBytes());
+			fos.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		new ReadBytes(App.config.get("serveraddress"), App.config.get("filepathsending"), App.config.get("filepathsent")).sendFile(file);
 		assertFalse(file.exists());
 	}
 
@@ -41,13 +49,12 @@ public class ReadBytesTest extends TestCase {
 	 * Test replaceFile method
 	 */
 	public void testReplaceFile() {
-		File file = new File("C:\\Users\\djekanovic\\Desktop\\sendinghttp\\randombytes");
+		File file = new File("C:\\Users\\djekanovic\\Desktop\\senthttp\\randombytes");
 		assertTrue(file.exists());
-		new ReadBytes().replaceFile(file, new File("C:\\Users\\djekanovic\\Desktop\\senthttp\\randombytes").toPath());
+		new ReadBytes().replaceFile(file, new File("C:\\Users\\djekanovic\\Desktop\\sendinghttp\\randombytes").toPath());
+		assertFalse(file.exists());
 		File filesending = new File("C:\\Users\\djekanovic\\Desktop\\sendinghttp\\randombytes");
-		assertFalse(filesending.exists());
-		File filesent = new File("C:\\Users\\djekanovic\\Desktop\\senthttp\\randombytes");
-		assertTrue(filesent.exists());
+		assertTrue(filesending.exists());
 	}
 
 }

@@ -12,6 +12,8 @@ import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.rtrk.client.socket.ServerSocket;
+
 //import com.rtrk.client.socket.ServerSocket;
 
 /**
@@ -22,15 +24,16 @@ public class App {
 
 	public static boolean end = false;
 
+	public static Map<String, String> config = getConfig("config\\config.cfg");
+	
 	public static void main(String[] args) {
 
 		// Get config
-		Map<String, String> config = getConfig("config\\config.cfg");
-		String servletAddress = config.get("servletaddress");
+		String servletAddress = config.get("serveraddress");
 		String sendingFilePath = config.get("filepathsending");
 		String sentFilePath = config.get("filepathsent");
 
-		// Connect to server
+		// Connect to HTTP server
 		boolean connected = connectToServer(servletAddress);
 		
 		if (connected) {
@@ -39,6 +42,10 @@ public class App {
 		} else {
 			System.out.println("Can't connect to HTTP Server.");
 		}
+		
+		// Start socket server
+		int port=Integer.parseInt(config.get("socketport"));
+		new ServerSocket(port, config.get("filepathsocket")).start();
 		
 	}
 
